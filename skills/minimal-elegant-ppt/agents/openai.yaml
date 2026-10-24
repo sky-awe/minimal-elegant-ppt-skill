@@ -1,0 +1,7 @@
+interface:
+  display_name: "简约高级 PPT · Minimal Elegant"
+  short_description: "通用简约高级PPT模板，以留白、清晰层级和可编辑版式呈现不同主题"
+  icon_large: "./assets/preview.png"
+  default_prompt: "使用 $minimal-elegant-ppt，根据我提供的内容制作简约高级的可编辑PPT，保持留白充足、层级清晰、配色克制。"
+policy:
+  allow_implicit_invocation: true

@@ -22,11 +22,12 @@ def require(condition: bool, message: str) -> None:
 
 
 def validate(root: Path) -> dict:
-    skill = root / "skills" / "research-seminar"
+    skill = root / "skills" / "minimal-elegant-ppt"
     required = [
         root / "LICENSE", root / "README.md", skill / "SKILL.md",
         skill / "agents" / "openai.yaml", skill / "references" / "design-guide.md",
         skill / "assets" / "template.pptx", skill / "assets" / "preview.png",
+        skill / "assets" / "layouts.png", skill / "LICENSE",
     ]
     for path in required:
         require(path.is_file(), f"Missing file: {path.relative_to(root)}")
@@ -34,9 +35,9 @@ def validate(root: Path) -> dict:
     match = re.match(r"\A---\r?\n(.*?)\r?\n---\r?\n", instructions, flags=re.S)
     require(match is not None, "SKILL.md needs YAML frontmatter")
     frontmatter = match.group(1)
-    require(bool(re.search(r"^name: research-seminar$", frontmatter, re.M)), "Unexpected skill name")
+    require(bool(re.search(r"^name: minimal-elegant-ppt$", frontmatter, re.M)), "Unexpected skill name")
     require(bool(re.search(r"^description: .+", frontmatter, re.M)), "Missing description")
-    require("$research-seminar" in (skill / "agents" / "openai.yaml").read_text(encoding="utf-8"), "UI prompt needs the skill name")
+    require("$minimal-elegant-ppt" in (skill / "agents" / "openai.yaml").read_text(encoding="utf-8"), "UI prompt needs the skill name")
     for target in re.findall(r"\]\(([^)]+)\)", instructions):
         if "://" not in target and not target.startswith("#"):
             resolved = (skill / target.split("#", 1)[0]).resolve()
@@ -48,28 +49,37 @@ def validate(root: Path) -> dict:
     with zipfile.ZipFile(skill / "assets" / "template.pptx") as package:
         require(package.testzip() is None, "Corrupt PPTX ZIP member")
         names = set(package.namelist())
-        # A blank evidence template should not carry source figures or embedded files.
+        # This layout library contains placeholders, not embedded source material.
         forbidden = [n for n in names if n.startswith(("ppt/media/", "ppt/embeddings/", "ppt/comments/", "customXml/"))]
         require(not forbidden, f"Unexpected media, embedding or hidden payload: {forbidden}")
         slides = sorted(n for n in names if re.fullmatch(r"ppt/slides/slide\d+\.xml", n))
         notes = [n for n in names if re.fullmatch(r"ppt/notesSlides/notesSlide\d+\.xml", n)]
-        require(len(slides) == len(notes) == 15, "Expected 15 slides and 15 speaker notes")
+        require(len(slides) == len(notes) == 12, "Expected 12 layouts and 12 notes")
         presentation = ET.fromstring(package.read("ppt/presentation.xml"))
         size = presentation.find("p:sldSz", NS)
         require(size is not None and (size.get("cx"), size.get("cy")) == ("12192000", "6858000"), "Expected 16:9 template size")
         table_count = 0
         placeholder_count = 0
+        connector_count = 0
+        timeline_point_count = 0
         for name in slides:
             xml = ET.fromstring(package.read(name))
             require(xml.get("show", "1") != "0", f"Hidden slide: {name}")
             require(not xml.findall(".//p:pic", NS), f"Unexpected source image: {name}")
             table_count += len(xml.findall(".//a:tbl", NS))
+            connector_count += len(xml.findall(".//p:cxnSp", NS))
             for shape in xml.findall(".//p:sp", NS):
                 prop = shape.find("p:nvSpPr/p:cNvPr", NS)
-                if prop is not None and prop.get("name", "").startswith("figure-placeholder-"):
-                    placeholder_count += 1
-        require(table_count == 2, "Expected two native editable tables")
-        require(placeholder_count == 12, f"Expected 12 figure/legend placeholders, found {placeholder_count}")
+                if prop is not None:
+                    shape_name = prop.get("name", "")
+                    if shape_name.startswith(("media-placeholder-", "chart-placeholder-")):
+                        placeholder_count += 1
+                    if shape_name.startswith("timeline-point-"):
+                        timeline_point_count += 1
+        require(table_count == 1, "Expected one native editable comparison table")
+        require(placeholder_count == 4, f"Expected four image/chart placeholders, found {placeholder_count}")
+        require(connector_count == 2, f"Expected two native process connectors, found {connector_count}")
+        require(timeline_point_count == 4, "Expected four editable timeline points")
         for name in notes:
             xml = ET.fromstring(package.read(name))
             require(len("".join(xml.itertext())) > 50, f"Empty speaker notes: {name}")
@@ -89,7 +99,7 @@ def validate(root: Path) -> dict:
                     elif part not in (".", "/"):
                         parts.append(part)
                 require("/".join(parts) in names, f"Missing relationship target: {name} -> {target}")
-    return {"slides": 15, "speaker_notes": 15, "native_tables": table_count, "figure_placeholders": placeholder_count}
+    return {"layouts": 12, "notes": 12, "native_tables": table_count, "media_placeholders": placeholder_count, "process_connectors": connector_count, "timeline_points": timeline_point_count}
 
 
 if __name__ == "__main__":

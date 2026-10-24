@@ -1,64 +1,74 @@
-# 研究生组会 Research Seminar Skill
+# 简约高级 PPT Skill
 
-让AI沿用一套简洁的中文学术版式，将论文与笔记整理成可编辑的研究生组会PPT。
+**Minimal Elegant PPT** — a reusable Agent Skill for clean, editable presentations.
 
-![模板预览](skills/research-seminar/assets/preview.png)
+用留白、清晰的字体层级和克制的配色，把不同主题的内容整理成可编辑PPT。适用于工作汇报、方案说明、教学分享、作品展示和学术报告。
 
-包含15页可编辑PowerPoint模板、中文演讲备注提示和面向学术证据的写作规则。白底深绿色、16:9，适合以原始论文图为中心讲清研究设计、趋势、幅度和科学含义。默认15—20分钟、约12—15页，不加备用页。
+![封面预览](skills/minimal-elegant-ppt/assets/preview.png)
 
-这是一个包含模板资源的Agent Skill，仍需运行环境具备阅读论文、编辑和渲染PPTX的能力。它不是独立的PPT生成软件，也不附带模型API、付费服务或字体。
+## 设计与版式
 
-## 安装与调用
+米白与炭黑为基础，深绿少量强调。正文页保持干净，深色章节页和结束页形成适度节奏。没有固定的专业、页数、时长或讲述结构。
 
-将整个 `skills/research-seminar` 文件夹放入你的Agent支持的Skill目录，保持 `SKILL.md`、`references/`、`agents/` 与 `assets/` 的相对位置。目录应为：
+包含12种版式：封面、章节、目录、核心观点、单图说明、双图对照、数据展示、比较表、流程、时间线、总结和结束页。文字、比较表、流程与时间线均为原生可编辑对象，图片和数据区域使用占位框。
 
-```text
-<你的Skill目录>/research-seminar/SKILL.md
-```
+![12种版式总览](skills/minimal-elegant-ppt/assets/layouts.png)
 
-在Codex中，也可以调用内置Skill Installer，直接发送：
+模板是一套版式库，不是必须填满的12页演示。可按内容选择、复制、删减或调整配色。
 
-```text
-请使用 Skill Installer，从 https://github.com/sky-awe/research-seminar-skill 安装 skills/research-seminar。
-```
+## 安装
 
-安装位置和重新加载方式以你使用的客户端为准，参见 [OpenAI官方技能文档](https://learn.chatgpt.com/docs/build-skills)。
+下载 [最新安装包](https://github.com/sky-awe/minimal-elegant-ppt-skill/releases/latest)，解压后将整个 `minimal-elegant-ppt` 文件夹放入客户端支持的Skill目录，保持内部资源的相对位置。
 
-安装后提供论文、笔记或可访问的文件路径，输入：
+在Codex中，也可以发送：
 
 ```text
-使用 $research-seminar，根据我提供的论文和笔记制作中文组会PPT。
-汇报15—20分钟，核心论文为主，对照论文最多1页。
-结果页优先使用论文原图，解释趋势、实际幅度和科学含义。
-每页附自然易懂的中文演讲备注，交付可编辑PPTX和PDF。
+请使用 Skill Installer，从 https://github.com/sky-awe/minimal-elegant-ppt-skill 安装 skills/minimal-elegant-ppt。
 ```
 
-修改某次汇报时，可以要求“保留这份PPT的版式，只优化第8—10页的原图讲解”。修改长期模板时，编辑 `assets/template.pptx` 及相应设计说明，更新预览后再校验。请在副本上制作新汇报。
+客户端如何发现和重新加载Skill，以其使用说明为准。仓库包含Codex界面元数据；其他Agent是否支持导入和导出PPTX取决于其环境。
 
-## 文件与能力
+## 使用
 
-- [`SKILL.md`](skills/research-seminar/SKILL.md)：可复用工作流与证据边界。
-- [`template.pptx`](skills/research-seminar/assets/template.pptx)：15页可编辑模板，含封面、概念、采样、流程、结果、对照与讨论版式。
-- [`design-guide.md`](skills/research-seminar/references/design-guide.md)：配色、字号、页面用途及替换规则。
-- `agents/openai.yaml`：Codex界面元数据。
-- `scripts/validate_skill.py`：仅用Python标准库检查发布包和PPTX结构。
+```text
+使用 $minimal-elegant-ppt，根据这些材料制作一份项目进展汇报。
+听众是团队成员，共10页。保持简约、留白充足，重点突出。
+交付可编辑PPTX。
+```
 
-文本、两张表格和采样/方法图解为原生可编辑对象。所有论文结果图均已替换为占位框。唯一保留的字母圆点图是明确标注的概念教学示例，不代表实测数据。正式生成的成品应使用用户提供的真实图表并清除占位提示。
+也可以用于已有PPT的风格整理：
 
-模板要求区分作者报告、作者解释和汇报者评价，避免将空间代时间讲成连续监测、把未显著讲成完全不变、把功能潜力讲成过程速率，或把参照相似性讲成恢复完成率。
+```text
+使用 $minimal-elegant-ppt 优化这份PPT。
+保留主要内容，统一字体、配色和对齐，减少拥挤，放大关键图表。
+```
 
-## 验证与兼容性
+页数、语言、强调色、PDF和演讲备注都可以按任务指定。Skill不强制研究生组会、论文原图、固定汇报时长、每页讲稿或每页引用。
 
-在仓库根目录执行：
+## 文件与运行条件
+
+- [`SKILL.md`](skills/minimal-elegant-ppt/SKILL.md)：通用内容适配、排版与交付规则。
+- [`template.pptx`](skills/minimal-elegant-ppt/assets/template.pptx)：12页原生可编辑版式库。
+- [`design-guide.md`](skills/minimal-elegant-ppt/references/design-guide.md)：配色、字号、页面用途和替换规则。
+- `agents/openai.yaml`：Codex界面元数据与调用提示。
+- `scripts/validate_skill.py`：仅使用Python标准库的发布包结构检查。
+
+这是一个包含模板资产的Skill。使用环境仍需能够编辑和渲染PPTX；它不是独立的PPT软件，不自带模型API、字体或付费服务。默认使用微软雅黑，其他系统替换字体后需检查换行。数据图区域没有虚构或示范数字，生成实际图表需要用户提供真实数据。
+
+## 验证
+
+在仓库根目录运行：
 
 ```sh
 python scripts/validate_skill.py
 ```
 
-检查技能资源引用、PPTX包结构、15页/15份备注、两张原生表、占位图框以及未打包的媒体和外部关系。它不验证新论文的科学结论，也不能代替逐页视觉检查。GitHub Actions自动执行同一结构检查。
+检查技能资源、PPTX关系、12页版式、12份备注提示、原生表格、图表占位框、流程连线和时间线节点。GitHub Actions运行相同检查。检查只验证发布模板的结构，不能代替生成后逐页视觉检查或内容核实。
 
-发布前模板已在Microsoft PowerPoint打开并逐页检查。默认使用微软雅黑；字体未随仓库分发，其他平台可能替换字体，需要重新检查换行。其他Agent的实际调用方式和PPTX导出能力取决于其客户端。本仓库不宣称经过所有客户端的端到端测试。
+此版本已在Microsoft PowerPoint中打开、渲染并逐页检查。没有宣称所有客户端均完成端到端测试。
 
-## 许可与材料范围
+## 版本与许可
 
-本仓库原创Skill说明、辅助脚本及模板版式采用 [MIT License](LICENSE)。公开版移除了私人汇报中的论文原图、具体论文题录、研究记录与个人路径。原论文、原图、用户后续加入的研究数据及第三方字体不属于本许可的授权范围；使用者应按其原有许可处理。
+v0.2.0起定位为通用的“简约高级 PPT Skill”，调用名为 `$minimal-elegant-ppt`。之前的组会版保留在 [v0.1.0历史版本](https://github.com/sky-awe/minimal-elegant-ppt-skill/tree/v0.1.0)，已安装旧版的用户需要安装新Skill才能使用新名称。
+
+原创Skill说明、脚本与模板版式采用 [MIT License](LICENSE)。不包含原论文、私人研究记录或第三方字体。使用者后来加入的图片、字体与数据按各自许可处理。

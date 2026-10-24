@@ -1,7 +1,0 @@
-interface:
-  display_name: "研究生组会 Research Seminar"
-  short_description: "制作白底深绿色的中文学术组会PPT，含原图讲解、中文讲稿与来源记录"
-  icon_large: "./assets/preview.png"
-  default_prompt: "使用 $research-seminar，根据我提供的论文与笔记制作15—20分钟中文组会PPT，附逐页讲稿，交付可编辑PPTX和PDF。"
-policy:
-  allow_implicit_invocation: true
