@@ -1,14 +1,22 @@
-# 简约高级 PPT Skill
+# 简约高级 PPT 模板 Skill｜白底深绿 · 可编辑 PowerPoint
 
 **Minimal Elegant PPT** — a reusable Agent Skill for clean, editable presentations.
 
 用留白、清晰的字体层级和克制的配色，把不同主题的内容整理成可编辑PPT。适用于工作汇报、方案说明、教学分享、作品展示和学术报告。
 
+## 免费下载
+
+- [可编辑PPTX模板](https://github.com/sky-awe/minimal-elegant-ppt-skill/releases/latest/download/minimal-elegant-template.pptx)：不使用AI也可以直接打开、修改内容。
+- [PDF版式预览](https://github.com/sky-awe/minimal-elegant-ppt-skill/releases/latest/download/minimal-elegant-template.pdf)：先查看全部12种版式。
+- [Skill安装包与版本说明](https://github.com/sky-awe/minimal-elegant-ppt-skill/releases/latest)：配合支持PPTX编辑的Agent环境使用。
+
+本项目采用MIT许可，可免费获取。无需购买才能使用开源文件；具体许可条件见[LICENSE](LICENSE)。
+
 ![封面预览](skills/minimal-elegant-ppt/assets/preview.png)
 
 ## 设计与版式
 
-米白与炭黑为基础，深绿少量强调。正文页保持干净，深色章节页和结束页形成适度节奏。没有固定的专业、页数、时长或讲述结构。
+白底、深绿标题、灰黑正文与少量浅绿结构区。图像占据主体，讲解紧贴图像；流程节点清晰，总结支持“主要认识＋讨论与下一步”的两栏布局。封面、章节和结束页保持相同的视觉语言。没有固定的专业、页数、时长或讲述结构。
 
 包含12种版式：封面、章节、目录、核心观点、单图说明、双图对照、数据展示、比较表、流程、时间线、总结和结束页。文字、比较表、流程与时间线均为原生可编辑对象，图片和数据区域使用占位框。
 
@@ -69,6 +77,14 @@ python scripts/validate_skill.py
 
 ## 版本与许可
 
+v0.3.0优化了12种版式的字体层级、图文比例和内容间距，统一为白底深绿风格。已有v0.2.0用户可替换整个Skill文件夹以同步模板与设计说明，调用名不变。
+
 v0.2.0起定位为通用的“简约高级 PPT Skill”，调用名为 `$minimal-elegant-ppt`。之前的组会版保留在 [v0.1.0历史版本](https://github.com/sky-awe/minimal-elegant-ppt-skill/tree/v0.1.0)，已安装旧版的用户需要安装新Skill才能使用新名称。
 
 原创Skill说明、脚本与模板版式采用 [MIT License](LICENSE)。不包含原论文、私人研究记录或第三方字体。使用者后来加入的图片、字体与数据按各自许可处理。
+
+## 查找与分享
+
+在GitHub搜索 `minimal-elegant-ppt-skill`，认准作者 `sky-awe`。完整仓库名为 `sky-awe/minimal-elegant-ppt-skill`。
+
+项目关键词：简约PPT模板、白底深绿PPT、可编辑PowerPoint、PPT美化、PPT Skill、minimal presentation template、editable PPTX。
